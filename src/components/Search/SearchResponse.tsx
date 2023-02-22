@@ -9,9 +9,10 @@ export function SearchResponse({ stocks }: ISearchResponse) {
         <Card elevation={0}>
             <CardContent >
                 <List>
-                    {stocks.slice(0, 10).map(s => {
+                    {stocks.slice(0, 10).map((s, i) => {
                         return (
                             <Link
+                                key={`link-${i}`}
                                 href={{
                                     pathname: '/tickers',
                                     query: { tickers: [s] },

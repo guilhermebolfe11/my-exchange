@@ -34,7 +34,7 @@ const Tickers: NextPage = () => {
         <>
             {tickersResponse &&
                 (isString ? <Ticker ticker={tickersResponse.results[0]} /> :
-                    tickersResponse?.results?.map(t => { return (<Ticker ticker={t} />) }))
+                    tickersResponse?.results?.map((t,i) => { return (<Ticker key={`ticker-${i}`} ticker={t} />) }))
             }
         </>
     );
