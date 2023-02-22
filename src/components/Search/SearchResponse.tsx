@@ -5,11 +5,11 @@ import ISearchResponse from '../../interfaces/ISearchResponse';
 
 export function SearchResponse({ stocks }: ISearchResponse) {
 
-    return stocks && (
+    return (
         <Card elevation={0}>
             <CardContent >
                 <List>
-                    {stocks.slice(0, 10).map((s, i) => {
+                    {stocks && stocks.slice(0, 10).map((s, i) => {
                         return (
                             <Link
                                 key={`link-${i}`}
