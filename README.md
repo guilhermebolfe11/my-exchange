@@ -1,8 +1,6 @@
-# My Site
+# My Exchange
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/a79e2e75-6b88-4eb9-9e80-b01aec57fdae/deploy-status)](https://app.netlify.com/sites/reverent-agnesi-d90498/deploys)
-
-My personal website, where I publish my resume, explain my experiences and many more.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fa12be3e-013b-4b83-802c-9ad374165f35/deploy-status)](https://app.netlify.com/sites/voluble-babka-17df22/deploys)
 
 ## Prerequisites
 
