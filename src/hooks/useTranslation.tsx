@@ -7,10 +7,10 @@ import { LangPt } from "../intl/pt";
 
 export default function useTranslation() {
     const { locale } = useContext(LanguageContext)
+    let translation = getTranslation();
+    useEffect(() => { translation = getTranslation() }, [locale]);
 
     function t(key: string) {
-        let translation = getTranslation();
-        useEffect(() => { translation = getTranslation() }, [locale]);
         return getT(key, translation) || key
     }
 

@@ -16,9 +16,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const { locale } = useContext(LanguageContext);
     let themeWithLocale = useMemo(
         () => createTheme(theme, locales[locale]),
-        [theme, locale],
+        [locale],
     );
-    
+
     return (
         <ThemeContext.Provider value={{}}>
             <ThemeProviderMUI theme={themeWithLocale} >

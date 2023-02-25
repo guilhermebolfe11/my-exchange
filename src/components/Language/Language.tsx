@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import Image from 'next/image';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { LanguageContext, SupportedLocales, locales } from '../../context/LanguageContext';
@@ -16,13 +17,13 @@ export default function Language() {
             disableClearable
             fullWidth
             renderOption={(props, option) => (
-                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    <img
+                <Box component="li" {...props}>
+                    <Image
+                        style={{ marginRight: 2, flexShrink: 0 }}
                         loading="lazy"
                         width="20"
+                        height="15"
                         src={`https://flagcdn.com/w20/${option.substring(2, 4).toLowerCase()}.png`}
-                        srcSet={`https://flagcdn.com/w40/${option.substring(2, 4).toLowerCase()}.png 2x`}
-                        alt=""
                     />
                     {getLabel(option)}
                 </Box>
@@ -40,9 +41,9 @@ export default function Language() {
 function getLabel(locale: string): string {
     switch (locale) {
         case "ptBR":
-            return "BR";
+            return " BR";
         case "enUS":
-            return "US";
+            return " US";
         default:
             return locale;
     }
