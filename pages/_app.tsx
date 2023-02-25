@@ -30,7 +30,7 @@ export default function MyApp(props: MyAppProps) {
         <ThemeProvider>
           <CssBaseline />
           <ExchangeAppBar />
-          <Box sx={{ flexGrow: 1, padding: 1, backgroundColor: "#fff" }}>
+          <Box sx={{ flexGrow: 1, padding: 1}}>
             <Component {...pageProps} />
           </Box>
         </ThemeProvider>

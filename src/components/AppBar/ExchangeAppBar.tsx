@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ExchangeDrawer from './ExchangeDrawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import { Search } from '../Search/Search';
 
 export default function ExchangeAppBar() {
   const [open, setOpen] = useState(false);
@@ -12,7 +13,7 @@ export default function ExchangeAppBar() {
 
 
   return (<>
-    <AppBar position="static" color='secondary'>
+    <AppBar position="static">
       <Toolbar>
         <IconButton
           color="inherit"
@@ -27,15 +28,16 @@ export default function ExchangeAppBar() {
         <Typography
           variant="h6"
           noWrap
-          component="a"
-          href="/"
           sx={{
             color: 'inherit',
-            textDecoration: 'none'
+            textDecoration: 'none',
+            flexGrow: 1,
+            display: { xs: 'none', sm: 'block' }
           }}
         >
           My Exchange
         </Typography>
+        <Search sx={{ ml: 2, width: 300 }} />
       </Toolbar>
     </AppBar>
     <ExchangeDrawer open={open} handleDrawerToggle={handleDrawerToggle} />

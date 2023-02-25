@@ -1,14 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { InputAdornment, TextField } from '@mui/material';
+import Link from 'next/link';
+import { alpha, Autocomplete, InputAdornment, InputBase, ListItemButton, ListItemText, styled, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import api from "../../services/api"
 import ISearchResponse from '../../interfaces/ISearchResponse';
-import { SearchResponse } from './SearchResponse';
+import ISearchProps from '../../interfaces/ISearchProps';
 import useTranslation from '../../hooks/useTranslation';
 
-export function Search() {
+const SearchInput = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  }));
+  
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+  
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
+  
+
+export function Search({ sx }: ISearchProps) {
     const { t } = useTranslation();
     const [term, setTerm] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
     const [searchResponse, setSearchResponse] = useState<ISearchResponse | undefined>(undefined);
 
     useEffect(() => {
@@ -18,6 +62,7 @@ export function Search() {
 
     const handleOnChange = (term: string) => {
         if (term.length > 2) {
+            setLoading(true);
             setTerm(term);
         }
     }
@@ -33,27 +78,47 @@ export function Search() {
             }
         });
 
+        setLoading(false);
         setSearchResponse(response.data);
     }
 
     return (
         <>
-            <TextField id="search-text"
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <SearchIcon />
-                        </InputAdornment>
-                    ),
-                }}
-                variant="outlined"
-                fullWidth
-                autoComplete="off"
-                helperText={t("Search.Minimum")}
-                placeholder='HGRU11'
-                onChange={e => handleOnChange(e.target.value)}
+            <Autocomplete
+                sx={sx}
+                isOptionEqualToValue={() => true}
+                options={searchResponse?.stocks ?? []}
+                loading={loading}
+                renderOption={(props, option) => (
+                    <Link
+                        key={`link-${option}`}
+                        href={{
+                            pathname: '/tickers',
+                            query: { tickers: [option] },
+                        }}
+                    >
+                        <ListItemButton>
+                            <ListItemText primary={option} />
+                        </ListItemButton>
+                    </Link>
+                )}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        variant="standard"
+                        placeholder={t("Search.Minimum")}
+                        onChange={(e) => handleOnChange(e.target.value)}
+                        InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                )}
             />
-            <SearchResponse stocks={searchResponse?.stocks} />
         </>
     );
 }
