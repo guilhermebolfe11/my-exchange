@@ -11,11 +11,11 @@ export function Ticker({ ticker }: ITickerComponent) {
                 subheader={ticker.longName}
                 avatar={<Avatar src={ticker.logourl} />} />
             <CardContent >
-                <Stack direction="row" spacing={1}>
-                    <Chip label={<CurrencyFormat value={ticker.regularMarketPrice} displayType='text' thousandSeparator prefix='R$' />} />
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
                     <Chip label={ticker.currency} />
+                    <Chip label={<CurrencyFormat value={ticker.regularMarketPrice} displayType='text' thousandSeparator prefix='R$' />} />
                 </Stack>
             </CardContent>
         </Card>
-    );
+    )
 }
